@@ -1,0 +1,22 @@
+<configuration>
+<property>
+  <name>dfs.replication</name>
+  <value>1</value>
+</property>
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>
+<property>
+  <name>dfs.namenode.name.dir</name>
+  <value>namenode_dir</value>
+</property>
+<property>
+  <name>dfs.namenode.checkpoint.dir</name>
+  <value>checkpoint_dir</value>
+</property>
+<property>
+  <name>dfs.datanode.data.dir</name>
+  <value>datanode_dir</value>
+</property>
+</configuration>
