@@ -50,7 +50,7 @@ install_hadoop(){
 
   local java_home=$(which javac)
   local java_path=$(readlink -f $java_home | sed 's@/bin/javac$@@')
-#  put_environment_variable
+  put_environment_variable
 
   {
     echo "export JAVA_HOME=$java_path"
@@ -69,7 +69,7 @@ install_hadoop(){
 
 install_hadoop_linux(){
 
-#  wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+  wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
   install_hadoop
 
@@ -97,7 +97,7 @@ install_hadoop_linux(){
 }
 
 install_hadoop_mac(){
-#  curl "https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" -o "hadoop-$HADOOP_VERSION.tar.gz"
+  curl "https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" -o "hadoop-$HADOOP_VERSION.tar.gz"
   install_hadoop
   sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/core-site.xml
   cat $PWD/utility/hadoop/core-site.xml >> $HADOOP_HOME/etc/hadoop/core-site.xml
