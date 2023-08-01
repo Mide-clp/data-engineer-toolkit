@@ -30,7 +30,8 @@ install_airflow(){
     echo -e "${BLUE}##################### The Airflow folder can be found in the user home directory"
     echo -e "${RED}Execute the below to create the admin user"
     echo -e "${WHITE}airflow users create ${BLUE}--username${WHITE} admin ${BLUE}--firstname ${WHITE}admin ${BLUE}--lastname ${WHITE}admin ${BLUE}--role ${WHITE}Admin ${BLUE}--email ${WHITE}admin@example.org"
-
+  else
+    echo -e "${BLUE}##################### Airflow has already been been installed!"
 
 
   fi

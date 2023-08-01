@@ -68,57 +68,73 @@ install_hadoop(){
 
 
 install_hadoop_linux(){
+  echo -e "${BLUE}##################### Checking if HADOOP has been installed!"
+  if ! [[ $(command -v hadoop) ]]; then
+    echo -e "${GREEN}##################### Installing HADOOP!"
+    wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
-  wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
-
-  install_hadoop
+    install_hadoop
 
 
-  sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/core-site.xml
-  cat $PWD/utility/hadoop/core-site.xml >> $HADOOP_HOME/etc/hadoop/core-site.xml
-  sed -i "s#hadoop_tmp_dir#$hadoop_tmp_dir#g" $HADOOP_HOME/etc/hadoop/core-site.xml
+    sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/core-site.xml
+    cat $PWD/utility/hadoop/core-site.xml >> $HADOOP_HOME/etc/hadoop/core-site.xml
+    sed -i "s#hadoop_tmp_dir#$hadoop_tmp_dir#g" $HADOOP_HOME/etc/hadoop/core-site.xml
 
-  sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  cat $PWD/utility/hadoop/hdfs-site.xml >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "s#namenode_dir#$namenode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "s#datanode_dir#$datanode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "s#checkpoint_dir#$checkpoint_dir#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    cat $PWD/utility/hadoop/hdfs-site.xml >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "s#namenode_dir#$namenode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "s#datanode_dir#$datanode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "s#checkpoint_dir#$checkpoint_dir#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
-  sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/mapred-site.xml
-  cat $PWD/utility/hadoop/mapred-site.xml >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-  sed -i '/configuration>/d'  $HADOOP_HOME/etc/hadoop/yarn-site.xml
-  cat $PWD/utility/hadoop/yarn-site.xml >> $HADOOP_HOME/etc/hadoop/yarn-site.xml
+    sed -i '/configuration>/d' $HADOOP_HOME/etc/hadoop/mapred-site.xml
+    cat $PWD/utility/hadoop/mapred-site.xml >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
+    sed -i '/configuration>/d'  $HADOOP_HOME/etc/hadoop/yarn-site.xml
+    cat $PWD/utility/hadoop/yarn-site.xml >> $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
-  ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-  chmod 0600 ~/.ssh/authorized_keys
+    ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+    chmod 0600 ~/.ssh/authorized_keys
 
-  hdfs namenode -format
+    hdfs namenode -format
+    echo -e "${GREEN}##################### HADOOP installation completed!"
+
+  else
+    echo -e "${BLUE}##################### HADOOP has already been been installed!"
+  fi
 }
 
+
 install_hadoop_mac(){
-  curl "https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" -o "hadoop-$HADOOP_VERSION.tar.gz"
-  install_hadoop
-  sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/core-site.xml
-  cat $PWD/utility/hadoop/core-site.xml >> $HADOOP_HOME/etc/hadoop/core-site.xml
-  sed -i "" "s#hadoop_tmp_dir#$hadoop_tmp_dir#g" $HADOOP_HOME/etc/hadoop/core-site.xml
+  echo -e "${BLUE}##################### Checking if HADOOP has been installed!"
+  if ! [[ $(command -v hadoop) ]]; then
+    echo -e "${GREEN}##################### Installing HADOOP!"
+    curl "https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" -o "hadoop-$HADOOP_VERSION.tar.gz"
+    install_hadoop
+    sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/core-site.xml
+    cat $PWD/utility/hadoop/core-site.xml >> $HADOOP_HOME/etc/hadoop/core-site.xml
+    sed -i "" "s#hadoop_tmp_dir#$hadoop_tmp_dir#g" $HADOOP_HOME/etc/hadoop/core-site.xml
 
-  sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  cat $PWD/utility/hadoop/hdfs-site.xml >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "" "s#namenode_dir#$namenode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "" "s#datanode_dir#$datanode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-  sed -i "" "s#checkpoint_dir#$checkpoint_dir#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    cat $PWD/utility/hadoop/hdfs-site.xml >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "" "s#namenode_dir#$namenode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "" "s#datanode_dir#$datanode#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+    sed -i "" "s#checkpoint_dir#$checkpoint_dir#g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
-  sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/mapred-site.xml
-  cat $PWD/utility/hadoop/mapred-site.xml >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
-  sed -i -e '/configuration>/d'  $HADOOP_HOME/etc/hadoop/yarn-site.xml
-  cat $PWD/utility/hadoop/yarn-site.xml >> $HADOOP_HOME/etc/hadoop/yarn-site.xml
+    sed -i -e '/configuration>/d' $HADOOP_HOME/etc/hadoop/mapred-site.xml
+    cat $PWD/utility/hadoop/mapred-site.xml >> $HADOOP_HOME/etc/hadoop/mapred-site.xml
+    sed -i -e '/configuration>/d'  $HADOOP_HOME/etc/hadoop/yarn-site.xml
+    cat $PWD/utility/hadoop/yarn-site.xml >> $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
-  ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-  chmod 0600 ~/.ssh/authorized_keys
+    ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+    chmod 0600 ~/.ssh/authorized_keys
 
-  hdfs namenode -format
+    hdfs namenode -format
+    echo -e "${GREEN}##################### HADOOP installation completed!"
+
+  else
+    echo -e "${BLUE}##################### HADOOP has already been been installed!"
+  fi
 }
 
 
@@ -135,13 +151,12 @@ hadoop_main() {
   case ${options[(($option- 1))]} in
 
     "INSTALL")
-      echo -e "${GREEN}##################### Installing HADOOP!"
+
       if [[ $OSTYPE == 'darwin'* ]]; then
         install_hadoop_mac
       elif [[ $OSTYPE == 'linux'* ]]; then
         install_hadoop_linux
       fi
-      echo -e "${GREEN}##################### HADOOP installation completed!"
     ;;
 
     "UNINSTALL")
